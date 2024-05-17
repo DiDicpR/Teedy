@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+  <description>
+    This is a custom ruleset that focuses on the following metrics: LoC, CC, WMC, CBO, and LCOM.
+  </description>
+
+  <!-- Cyclomatic Complexity -->
+  <rule ref="category/java/design.xml/CyclomaticComplexity">
+    <properties>
+      <property name="reportLevel" value="3"/>
+      <!-- Adjust the value based on your complexity threshold -->
+    </properties>
+  </rule>
+
+<!--  LOC-->
+<!--  This rule uses the NCSS (Non-Commenting Source Statements) metric to determine the number of lines of code in a class, method or constructor. NCSS ignores comments, blank lines, and only counts actual statements. For more details on the calculation, see the documentation NCSS-->
+  <rule ref="category/java/design.xml/NcssCount">
+    <properties>
+      <property name="methodReportLevel" value="60" />
+      <property name="classReportLevel" value="1500" />
+      <property name="ncssOptions" value="" />
+    </properties>
+  </rule>
+
+
+<!--  LCOM:这个规则直接关注于类之间的耦合，降低耦合度通常也会增加类内部的内聚性，间接帮助改善LCOM。-->
+  <rule ref="category/java/design.xml/CouplingBetweenObjects">
+    <properties>
+      <property name="threshold" value="20" />
+    </properties>
+  </rule>
+
+<!--  WMC-->
+  <rule ref="category/java/design.xml/GodClass" />
+
+
+<!--  This rule counts the number of unique attributes, local-->
+<!--  variables, and return types within an object. A number higher t-->
+<!--  han the specified threshold can indicate a high degree of coupling.-->
+  <!-- For Coupling Between Objects, there's not a direct PMD rule. However, using rules that enforce good design can indirectly help manage CBO. -->
+  <rule ref="category/java/design.xml/CouplingBetweenObjects"/>
+
+  <!-- PMD does not directly offer rules for LoC, WMC, and LCOM. However, focusing on complexity and design can help manage these metrics indirectly.
+       For a more precise analysis of these metrics, consider integrating other tools or performing manual code reviews. -->
+</ruleset>
